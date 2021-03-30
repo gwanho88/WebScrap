@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>assignment</title>
+</head>
+<body>
+    <form id="form" th:action="@{/getScraping}" th:object="${requestScrap}" th:method="post">
+        <table style="width:100%">
+            <colgroup>
+                <col width="15%"/>
+                <col width="*"/>
+            </colgroup>
+            <tr>
+                <th>입력주소</th>
+                <td>
+                    <input type="text" th:field="*{url}" style="width:85%"
+                           placeholder="URL을 입력하세요.(ex : https://front.wemakeprice.com)"><br/>
+                    <span style="color: #ff0000" th:if="${#fields.errors('url')}" th:errors="*{url}"></span>
+                </td>
+
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>
+                    <select th:field="*{useTag}">
+                        <option value="true">HTML 태그제외</option>
+                        <option value="false">Text 전체</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>출력묶음단위(자연수)</th>
+                <td>
+                    <input type="number" th:field="*{unit}" min="1" max="1000000"><br/>
+                    <span style="color: #ff0000"  th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></span>
+                </td>
+            </tr>
+            <tr>
+                <th><input type="submit" value="출력" style="width: 100%"/></th>
+                <td>
+                    <span style="color: #ff0000"  th:text="${response.errorMessage}"></span>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <div>
+        <table style="width:100%">
+            <colgroup>
+                <col width="10%"/>
+                <col width="*"/>
+            </colgroup>
+            <tr>
+                <th>몫</th>
+                <td>
+                    <textarea th:text="${response.quotient}" style="width: 100%; height: 400px" readonly></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>나머지</th>
+                <td>
+                    <textarea th:text="${response.remainder}" style="width: 100%;height: 400px" readonly></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
