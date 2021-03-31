@@ -2,7 +2,6 @@ package com.wemakeprice.assignment.scraping.model;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.Min;

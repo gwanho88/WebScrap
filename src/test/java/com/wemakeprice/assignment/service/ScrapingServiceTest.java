@@ -1,5 +1,6 @@
 package com.wemakeprice.assignment.service;
 
+import com.wemakeprice.assignment.exception.CustomException;
 import com.wemakeprice.assignment.scraping.model.RequestScrap;
 import com.wemakeprice.assignment.scraping.model.ResponseScrap;
 import com.wemakeprice.assignment.scraping.service.ScrapingService;
@@ -26,16 +27,16 @@ class ScrapingServiceTest {
 
     static Stream<Arguments> scrapRequestSampleData() {
         return Stream.of(
-                Arguments.of("https://front.wemakeprice.com", 1000, true),
-                Arguments.of("http://www.naver.com", 1000, true),
-                Arguments.of("http://www.google.com", 20000, false)
+                Arguments.of("위메프", "https://front.wemakeprice.com", 1000, true),
+                Arguments.of("네이버", "http://www.naver.com", 1000, true),
+                Arguments.of("위메프","http://www.google.com", 20000, false)
         );
     }
 
     @DisplayName("스크랩 정보 테스트")
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}. {0}")
     @MethodSource("scrapRequestSampleData")
-    public void getConvertToScrapTest(String url, int unit, boolean useTag) {
+    public void getConvertToScrapTest(String name, String url, int unit, boolean useTag) {
 
         RequestScrap testData = RequestScrap.builder().url(url).useTag(useTag).unit(unit).build();
 
@@ -45,19 +46,20 @@ class ScrapingServiceTest {
 
     static Stream<Arguments> scrapRequestBadCaseSampleData() {
         return Stream.of(
-                Arguments.of("http://www.dkfjwlif.com", 1000, true),
-                Arguments.of("www.ujkkjurhhk.com", 20000, false),
-                Arguments.of("www.ekwldmfixm.com", 20000, false)
+                Arguments.of("http protocol 제거","http://www.dkfjwlif.com", 1000, true),
+                Arguments.of("잘못된 도메인","http://www.ujkkjurhhk.com", 20000, false),
+                Arguments.of("문자열", "wwldmfixm.com", 20000, false)
         );
     }
 
     @DisplayName("스크랩 정보 조회 실패 테스트")
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}. {0}")
     @MethodSource("scrapRequestBadCaseSampleData")
-    public void getConvertToScrapBadCaseTest(String url, int unit, boolean useTag) {
+    public void getConvertToScrapBadCaseTest(String name, String url, int unit, boolean useTag) {
 
         RequestScrap testData = RequestScrap.builder().url(url).useTag(useTag).unit(unit).build();
-        ResponseScrap responseScrap = scrapingService.getConvertToScrap(testData);
-        Assertions.assertEquals(Constants.SCRAP_SUCCESS, responseScrap.getStatus());
+        Assertions.assertThrows(CustomException.class, () -> {
+            ResponseScrap responseScrap = scrapingService.getConvertToScrap(testData);
+        });
     }
 }

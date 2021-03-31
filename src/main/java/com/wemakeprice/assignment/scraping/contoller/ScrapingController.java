@@ -20,12 +20,17 @@ public class ScrapingController {
     private final ScrapingService scrapingService;
 
     @GetMapping("/")
-    public String show(Model model) {
+    public String home(Model model) {
         model.addAttribute("requestScrap", RequestScrap.builder().url("https://front.wemakeprice.com").unit(100).build());
         model.addAttribute("response", ResponseScrap.builder().build());
         return Constants.HOME;
     }
 
+    /**
+     * 스크랩 조회
+     * @param requestScrap
+     * @return model
+     */
     @PostMapping("/getScraping")
     public String getScraping(Model model, @Valid RequestScrap requestScrap, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {

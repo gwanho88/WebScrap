@@ -6,10 +6,7 @@ import com.wemakeprice.assignment.constants.Constants;
 import com.wemakeprice.assignment.util.Scraper;
 import com.wemakeprice.assignment.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.HttpStatusException;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 
 @Slf4j
 @Service
@@ -23,11 +20,11 @@ public class ScrapingService{
             scrapedBody = StringUtil.removeTag(scrapedBody);
         }
 
-        String sortedAlpabets = StringUtil.priorityLetterSort(StringUtil.getAlphabets(scrapedBody));
+        String sortedAlphabets = StringUtil.upperCaseLetterPriorityAndAscendingSort(StringUtil.getAlphabets(scrapedBody));
         String sortedNumbers = StringUtil.numberSort(StringUtil.getNumbers(scrapedBody));
-        String combineAlpabetsAndNumbers = StringUtil.combineString(sortedAlpabets, sortedNumbers);
-        String quotient = combineAlpabetsAndNumbers.substring(0,combineAlpabetsAndNumbers.length() / requestScrap.getUnit() * requestScrap.getUnit());
-        String remainder = combineAlpabetsAndNumbers.substring(quotient.length());
+        String combineAlphabetsAndNumbers = StringUtil.combineString(sortedAlphabets, sortedNumbers);
+        String quotient = combineAlphabetsAndNumbers.substring(0,combineAlphabetsAndNumbers.length() / requestScrap.getUnit() * requestScrap.getUnit());
+        String remainder = combineAlphabetsAndNumbers.substring(quotient.length());
 
         ResponseScrap responseScrap = ResponseScrap.builder()
                                         .status(Constants.SCRAP_SUCCESS)

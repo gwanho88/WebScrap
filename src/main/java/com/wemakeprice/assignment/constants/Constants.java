@@ -3,8 +3,6 @@ package com.wemakeprice.assignment.constants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.regex.Pattern;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Constants {
 

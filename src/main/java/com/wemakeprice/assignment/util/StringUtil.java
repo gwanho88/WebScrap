@@ -1,15 +1,10 @@
 package com.wemakeprice.assignment.util;
 
-import com.wemakeprice.assignment.constants.Constants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.httpclient.HttpStatus;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import org.apache.commons.httpclient.HttpStatus;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtil {
@@ -27,17 +22,24 @@ public class StringUtil {
         return NOT_NUMBER_PATTERN.matcher(body).replaceAll("");
     }
 
-    public static String priorityLetterSort(String body) {
-        return body
+    /**
+     * 영문 오름차순 및 대문자 우선정렬(ex AaAaBcD.. -> AAaaBcD..)
+     * @param body
+     * @return String
+     */
+    public static String upperCaseLetterPriorityAndAscendingSort(String body) {
+        String alphabet =  NOT_ALPHABET_PATTERN.matcher(body).replaceAll("");
+        return alphabet
                 .chars()
                 .mapToObj(c -> (char)c)
-                .sorted(new PriorityLetterSortComparator())
+                .sorted(new UpperCaseLetterPrioritySortComparator())
                 .map(String::valueOf)
                 .collect(Collectors.joining());
     }
 
     public static String numberSort(String body){
-        return body
+        String numbers = NOT_NUMBER_PATTERN.matcher(body).replaceAll("");
+        return numbers
                 .chars()
                 .mapToObj(c -> (char)c)
                 .sorted()
@@ -67,9 +69,4 @@ public class StringUtil {
 
         return sb.toString();
     }
-
-    public static String  getHttpErrorMessage(int httpStatusCode){
-        return "요청하신 URL주소 접속할 수 없습니다.(" + httpStatusCode + ":" + HttpStatus.getStatusText(httpStatusCode) +")";
-    }
-
 }

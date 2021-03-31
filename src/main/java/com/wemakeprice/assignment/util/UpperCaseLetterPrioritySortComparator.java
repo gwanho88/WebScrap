@@ -2,7 +2,7 @@ package com.wemakeprice.assignment.util;
 
 import java.util.Comparator;
 
-public class PriorityLetterSortComparator implements Comparator<Character> {
+public class UpperCaseLetterPrioritySortComparator implements Comparator<Character> {
 
     @Override
     public int compare(Character c1, Character c2) {
