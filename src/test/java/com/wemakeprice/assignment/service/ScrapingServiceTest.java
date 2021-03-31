@@ -36,7 +36,7 @@ class ScrapingServiceTest {
     @DisplayName("스크랩 정보 테스트")
     @ParameterizedTest
     @MethodSource("scrapRequestSampleData")
-    public void getConvertToScrapTest(String url, int unit, boolean useTag) {
+    public void getConvertToScrapTest(String url, int unit, boolean useTag) throws Exception {
 
         RequestScrap testData = RequestScrap.builder().url(url).useTag(useTag).unit(unit).build();
 
@@ -55,7 +55,7 @@ class ScrapingServiceTest {
     @DisplayName("스크랩 정보 조회 실패 테스트")
     @ParameterizedTest
     @MethodSource("scrapRequestBadCaseSampleData")
-    public void getConvertToScrapBadCaseTest(String url, int unit, boolean useTag) {
+    public void getConvertToScrapBadCaseTest(String url, int unit, boolean useTag) throws Exception {
 
         RequestScrap testData = RequestScrap.builder().url(url).useTag(useTag).unit(unit).build();
         ResponseScrap responseScrap = scrapingService.getConvertToScrap(testData);

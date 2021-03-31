@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
-//import javax.validation.Valid;
-
 @Controller
 @RequiredArgsConstructor
 public class ScrapingController {
@@ -31,7 +29,7 @@ public class ScrapingController {
     }
 
     @PostMapping("/getScraping")
-    public String getScraping(Model model, @Valid RequestScrap requestScrap, BindingResult bindingResult) {
+    public String getScraping(Model model, @Valid RequestScrap requestScrap, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             model.addAttribute("response", ResponseScrap.builder().status(Constants.SCRAP_FAIL).quotient("").remainder("").build());
             return Constants.HOME;

@@ -3,11 +3,21 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>assignment</title>
+    <title>WebPage Scrap</title>
 </head>
+<style>
+    table {
+        width: 100%;
+        border: 1px solid #444444;
+    }
+    th, td {
+        border: 1px solid #444444;
+    }
+</style>
 <body>
+    <h2 style="text-align: center;">WebPage Scrap</h2>
     <form id="form" th:action="@{/getScraping}" th:object="${requestScrap}" th:method="post">
-        <table style="width:100%">
+        <table style="width:100%;">
             <colgroup>
                 <col width="15%"/>
                 <col width="*"/>
@@ -15,7 +25,7 @@
             <tr>
                 <th>입력주소</th>
                 <td>
-                    <input type="text" th:field="*{url}" style="width:85%"
+                    <input type="text" th:field="*{url}" style="width:100%"
                            placeholder="URL을 입력하세요.(ex : https://front.wemakeprice.com)"><br/>
                     <span style="color: #ff0000" th:if="${#fields.errors('url')}" th:errors="*{url}"></span>
                 </td>
@@ -38,9 +48,10 @@
                 </td>
             </tr>
             <tr>
-                <th><input type="submit" value="출력" style="width: 100%"/></th>
+                <th>조회</th>
                 <td>
-                    <span style="color: #ff0000"  th:text="${response.errorMessage}"></span>
+                    <input type="submit" value="출력" style="width: 30%"/>
+                    <span style="color: #ff0000"  th:text="${errorMessage}"></span>
                 </td>
             </tr>
         </table>
@@ -49,7 +60,7 @@
     <div>
         <table style="width:100%">
             <colgroup>
-                <col width="10%"/>
+                <col width="15%"/>
                 <col width="*"/>
             </colgroup>
             <tr>

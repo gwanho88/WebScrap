@@ -27,9 +27,9 @@ public class ScraperTest {
     @DisplayName("스크랩 테스트")
     @ParameterizedTest
     @MethodSource("scrapSampleData")
-    public void scrapTest(String url){
-        HashMap<String,String> responseScrap = Scraper.webScrapping(url);
-        Assertions.assertEquals(Constants.SCRAP_SUCCESS, responseScrap.get("result"));
+    public void scrapTest(String url) throws Exception {
+        String scrapBody = Scraper.webScrapping(url);
+        Assertions.assertTrue(scrapBody.length() > 0);
     }
 
     static Stream<Arguments> scrapFailSampleData() {
@@ -43,8 +43,8 @@ public class ScraperTest {
     @DisplayName("스크랩 정보 조회 실패 테스트")
     @ParameterizedTest
     @MethodSource("scrapFailSampleData")
-    public void scrapFailTest(String url){
-        HashMap<String,String> responseScrap = Scraper.webScrapping(url);
-        Assertions.assertEquals(Constants.SCRAP_SUCCESS, responseScrap.get("result"));
+    public void scrapFailTest(String url) throws Exception {
+        String scrapBody = Scraper.webScrapping(url);
+        Assertions.assertTrue(scrapBody.length() > 0);
     }
 }

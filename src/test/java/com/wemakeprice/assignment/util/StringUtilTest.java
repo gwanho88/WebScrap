@@ -104,7 +104,7 @@ class StringUtilTest {
 
     static Stream<Arguments> removeTagSampleData() {
         return Stream.of(
-                Arguments.of("<html><body></body></html>", ""),
+                Arguments.of("<htm<body></body></html>", ""),
                 Arguments.of("<html>12d<body>v23sd</body>12das</html>", "12dv23sd12das"),
                 Arguments.of("<html>1@!2d<body>v#D!23sd</body>12dDEas</html>", "1@!2dv#D!23sd12dDEas")
         );

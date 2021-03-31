@@ -6,6 +6,7 @@ import com.wemakeprice.assignment.constants.Constants;
 import com.wemakeprice.assignment.util.Scraper;
 import com.wemakeprice.assignment.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.HttpStatusException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,27 +15,18 @@ import java.util.HashMap;
 @Service
 public class ScrapingService{
 
-    public ResponseScrap getConvertToScrap(RequestScrap param){
+    public ResponseScrap getConvertToScrap(RequestScrap requestScrap) throws Exception {
 
-        HashMap<String,String> scrapedResult = Scraper.webScrapping(param.getUrl());
-        String scrapedBody = "";
-        if(Constants.SCRAP_FAIL.equals(scrapedResult.get("result"))){
-            return ResponseScrap.builder().status(Constants.SCRAP_FAIL).errorMessage(scrapedResult.get("message")).build();
-        }else{
-            scrapedBody = scrapedResult.get("scrapData");
-        }
+        String scrapedBody = Scraper.webScrapping(requestScrap.getUrl());
 
-        if(param.isUseTag()) {
+        if(requestScrap.isUseTag()) {
             scrapedBody = StringUtil.removeTag(scrapedBody);
         }
 
         String sortedAlpabets = StringUtil.priorityLetterSort(StringUtil.getAlphabets(scrapedBody));
-        log.info("string length :{}, sortedAlpabets : {}", sortedAlpabets.length(), sortedAlpabets.toString());
         String sortedNumbers = StringUtil.numberSort(StringUtil.getNumbers(scrapedBody));
-        log.info("string length :{}, sortedNumbers : {}", sortedNumbers.length(), sortedNumbers);
         String combineAlpabetsAndNumbers = StringUtil.combineString(sortedAlpabets, sortedNumbers);
-        log.info("string length :{},mergeAlpabetsAndNumbers : {}",combineAlpabetsAndNumbers.length(), combineAlpabetsAndNumbers);
-        String quotient = combineAlpabetsAndNumbers.substring(0,combineAlpabetsAndNumbers.length() / param.getUnit() * param.getUnit());
+        String quotient = combineAlpabetsAndNumbers.substring(0,combineAlpabetsAndNumbers.length() / requestScrap.getUnit() * requestScrap.getUnit());
         String remainder = combineAlpabetsAndNumbers.substring(quotient.length());
 
         ResponseScrap responseScrap = ResponseScrap.builder()
