@@ -15,7 +15,7 @@ import java.util.HashMap;
 @Service
 public class ScrapingService{
 
-    public ResponseScrap getConvertToScrap(RequestScrap requestScrap) throws Exception {
+    public ResponseScrap getConvertToScrap(RequestScrap requestScrap){
 
         String scrapedBody = Scraper.webScrapping(requestScrap.getUrl());
 

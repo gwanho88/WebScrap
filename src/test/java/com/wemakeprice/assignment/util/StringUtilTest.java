@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.stream.Stream;
 
-@SpringBootTest(classes = StringUtil.class)
 class StringUtilTest {
 
     static Stream<Arguments> alphabetsSampleData() {
@@ -113,7 +112,7 @@ class StringUtilTest {
     @DisplayName("html tag 제거 테스트")
     @ParameterizedTest
     @MethodSource("removeTagSampleData")
-    public void removeTagTest(String s1, String result) throws Exception {
+    public void removeTagTest(String s1, String result) {
         Assertions.assertEquals(result, StringUtil.removeTag(s1));
     }
 
@@ -128,7 +127,7 @@ class StringUtilTest {
     @DisplayName("html tag 제거 BadCase 테스트")
     @ParameterizedTest
     @MethodSource("removeTagBadCaseSampleData")
-    public void removeTagBadCaseTest(String s1, String result) throws Exception {
+    public void removeTagBadCaseTest(String s1, String result) {
         Assertions.assertEquals(result, StringUtil.removeTag(s1));
     }
 
@@ -143,7 +142,7 @@ class StringUtilTest {
     @DisplayName("영문 숫자 순차적 문자열 결합 테스트")
     @ParameterizedTest
     @MethodSource("combineStringSampleData")
-    public void combineStringTest(String s1, String s2, String result) throws Exception {
+    public void combineStringTest(String s1, String s2, String result) {
         Assertions.assertEquals(result, StringUtil.combineString(s1,s2));
     }
 
@@ -158,7 +157,7 @@ class StringUtilTest {
     @DisplayName("영문 숫자 순차적 문자열 결합 BadCase 테스트")
     @ParameterizedTest
     @MethodSource("combineStringBadCaseSampleData")
-    public void combineStringBadCaseTest(String s1, String s2, String result) throws Exception {
+    public void combineStringBadCaseTest(String s1, String s2, String result) {
         Assertions.assertEquals(result, StringUtil.combineString(s1,s2));
     }
 }

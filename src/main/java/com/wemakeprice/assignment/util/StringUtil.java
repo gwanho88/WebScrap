@@ -30,7 +30,7 @@ public class StringUtil {
     public static String priorityLetterSort(String body) {
         return body
                 .chars()
-                .mapToObj(c -> new Character((char)c))
+                .mapToObj(c -> (char)c)
                 .sorted(new PriorityLetterSortComparator())
                 .map(String::valueOf)
                 .collect(Collectors.joining());
@@ -39,7 +39,7 @@ public class StringUtil {
     public static String numberSort(String body){
         return body
                 .chars()
-                .mapToObj(c -> new Character((char)c))
+                .mapToObj(c -> (char)c)
                 .sorted()
                 .map(String::valueOf)
                 .collect(Collectors.joining());
@@ -53,21 +53,17 @@ public class StringUtil {
     public static String combineString(String s1, String s2){
 
         StringBuilder sb = new StringBuilder(s1.length() + s2.length());
+        String smaller = s1.length() < s2.length() ? s1 : s2;
+        String larger = s1.length() > s2.length() ? s1 : s2;
 
         int i = 0;
-        if(s1.length() < s2.length()){
-            for (i = 0; i < s1.length(); i++) {
-                sb.append(s1.charAt(i));
-                sb.append(s2.charAt(i));
-            }
-            sb.append(s2.substring(i));
-        }else{
-            for (i = 0; i < s2.length(); i++) {
-                sb.append(s1.charAt(i));
-                sb.append(s2.charAt(i));
-            }
-            sb.append(s1.substring(i));
+        for (i = 0; i < smaller.length(); i++) {
+            sb.append(s1.charAt(i));
+            sb.append(s2.charAt(i));
         }
+
+        sb.append(larger.substring(i));
+
 
         return sb.toString();
     }

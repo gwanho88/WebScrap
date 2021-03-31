@@ -19,8 +19,6 @@ public class ScrapingController {
 
     private final ScrapingService scrapingService;
 
-
-
     @GetMapping("/")
     public String show(Model model) {
         model.addAttribute("requestScrap", RequestScrap.builder().url("https://front.wemakeprice.com").unit(100).build());
@@ -29,7 +27,7 @@ public class ScrapingController {
     }
 
     @PostMapping("/getScraping")
-    public String getScraping(Model model, @Valid RequestScrap requestScrap, BindingResult bindingResult) throws Exception {
+    public String getScraping(Model model, @Valid RequestScrap requestScrap, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             model.addAttribute("response", ResponseScrap.builder().status(Constants.SCRAP_FAIL).quotient("").remainder("").build());
             return Constants.HOME;
